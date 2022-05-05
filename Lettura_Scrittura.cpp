@@ -6,18 +6,26 @@ using namespace std;
 
 // funzione per far finire il programma
 bool end(){
+	cout << endl;
 	system("pause");
 	system("cls");
 	char ans;
-	cout << "Vuoi fare altro? (Y) (N)\t";
+	cout << "Vuoi fare altro?" << endl;
+	cout << "(Y) Si" << endl;
+	cout << "(N) No" << endl;
+	cout << "--> ";
 	cin >> ans;
 	while (cin.fail()){
 		cerr << "Scrivi Y se vuoi fare altro altrimenti N" << endl;
 		cin.clear();
 		cin.ignore(numeric_limits<streamsize>::max(), '\n');
-		cout << "Vuoi fare altro? (Y) (N)\t";
+		cout << "Vuoi fare altro?" << endl;
+		cout << "(Y) Sì" << endl;
+		cout << "(N) No" << endl;
+		cout << "--> ";
 		cin >> ans;
 	}
+	system("cls");
 	if(toupper(ans) == YES)
 		return true; // così il programma riparte
 	else return false; // così il programma si ferma
@@ -27,7 +35,8 @@ bool end(){
 void fileTransfer(fstream& fileA){
 	fstream fileB;
 	string s;
-	cout << "Inserisci nome programma di destinazione: ";
+	cout << "Inserisci nome programma di destinazione: " << endl;
+	cout << "--> ";
 	cin >> s;
 	fileB.open(s, fstream::out | fstream::trunc); // trunc serve a cancellare le eventuali robe già nel file e sovrascriverle
 	if(!fileB){
@@ -49,16 +58,18 @@ void fileTransfer(fstream& fileA){
 // funzione di lettura
 void read(fstream& file){
 	short n;
-	cout << "Quante righe vuoi leggere?\t";
+	cout << endl << "Quante righe vuoi leggere? (scrivi 0 per stampare tutto il file)" << endl;
+	cout << "--> ";
 	cin >> n;
 	while (cin.fail() || n<0){
 		cerr << "Errore, immetti il numero di righe" << endl;
 		cin.clear();
 		cin.ignore(numeric_limits<streamsize>::max(), '\n');
-		cout << "Quante righe vuoi leggere?\t";
+		cout << endl << "Quante righe vuoi leggere? (scrivi 0 per stampare tutto il file)" << endl;
+		cout << "--> ";
 		cin >> n;
 	}
-	cout << "CONTENUTO FILE:" << endl << endl;
+	cout << endl << "CONTENUTO FILE:" << endl << endl;
 	string s;
 	if(n==0){ // così trascrive tutto ciò che c'è sul file
 		while(file.good()){
@@ -90,10 +101,11 @@ void read(fstream& file){
 void write(fstream& file){
 	string s = "";
 	bool init = true;
-	cout << "Scrivi quello che vuoi, inserisci END quando hai finito" << endl;
+	cout << endl << "Scrivi quello che vuoi, inserisci END quando hai finito" << endl;
 	while(getline(cin,s)){
 		if(s == "END")
 			break;
+		cout << "--> ";
 		if(init){ // sta roba serve a non fargli mettere degli endl a caso all'inizio
 			file << s;
 			init = false;
@@ -109,7 +121,7 @@ void write(fstream& file){
 // funzione per scegliere che fare col file
 void func(fstream& file){
 	int s;
-	cout << "Cosa vuoi fare?" << endl;
+	cout << endl << "Cosa vuoi fare?" << endl;
 	cout << "(1) Leggere da file" << endl;
 	cout << "(2) Scrivere su file" << endl;
 	cout << "(3) Sovrascrive il contenuto del file su un altro file" << endl;
@@ -119,7 +131,7 @@ void func(fstream& file){
 		cerr << "Devi scrivere 1, 2 o 3 per selezionare la funzione" << endl;
 		cin.clear();
 		cin.ignore(numeric_limits<streamsize>::max(), '\n');
-		cout << "Cosa vuoi fare?" << endl;
+		cout << endl << "Cosa vuoi fare?" << endl;
 		cout << "(1) Leggere da file" << endl;
 		cout << "(2) Scrivere su file" << endl;
 		cout << "(3) Sovrascrive il contenuto del file su un altro file" << endl;
@@ -136,7 +148,8 @@ void func(fstream& file){
 // funzione che crea o seleziona il file nella cartella del .cpp
 bool fileSelect(fstream& file){ // occhio alla &
 	string name;
-	cout << "Inserisci nome file (specificando l'estensione): ";
+	cout << "Inserisci nome file (specificando l'estensione): " << endl;
+	cout << "--> ";
 	cin >> name;
 	file.open(name, fstream::out | fstream::app | fstream::in); // se il file non esiste lo crea
 	if(!file){ // se non riesce a crearlo allora...
