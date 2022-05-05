@@ -19,16 +19,17 @@ bool end(){
 		cin >> ans;
 	}
 	if(toupper(ans) == YES)
-		return true;
-	else return false;
+		return true; // così il programma riparte
+	else return false; // così il programma si ferma
 }
 
+// funzione per sovrascrivere un secondo file
 void fileTransfer(fstream& fileA){
 	fstream fileB;
 	string s;
 	cout << "Inserisci nome programma di destinazione: ";
 	cin >> s;
-	fileB.open(s, fstream::out | fstream::trunc);
+	fileB.open(s, fstream::out | fstream::trunc); // trunc serve a cancellare le eventuali robe già nel file e sovrascriverle
 	if(!fileB){
 		cerr << "Errore nella creazione del file" << endl;
 		return;
@@ -67,11 +68,12 @@ void read(fstream& file){
 				cerr << "Errore durante lettura su file" << endl;
 				break;
 			}
-			if(!file.eof())
+			if(!file.eof()) // va avanti fino all'EOF, a quel punto non stampa nient'altro
 				cout << s << endl;
 		}
 		return;	
 	}
+	// questo serve a leggere solo le prime n righe del file
 	for(int i=0; i<n && file.good(); i++){
 		getline(file,s);
 		if(file.eof()) break;
@@ -92,7 +94,7 @@ void write(fstream& file){
 	while(getline(cin,s)){
 		if(s == "END")
 			break;
-		if(init){
+		if(init){ // sta roba serve a non fargli mettere degli endl a caso all'inizio
 			file << s;
 			init = false;
 		}
@@ -149,7 +151,7 @@ bool fileSelect(fstream& file){ // occhio alla &
 int main(){
 	fstream file;
 	bool pg = true;
-	while(pg){
+	while(pg){ // il programma riparte eventualmente fino a quando pg è false
 		pg = fileSelect(file);
 	}
 	return 0;
