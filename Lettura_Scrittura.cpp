@@ -23,14 +23,6 @@ bool end(){
 	else return false;
 }
 
-// funzione che verifica se il file è vuoto
-bool isEmpty(fstream& file){
-    if (file.peek() == fstream::traits_type::eof()){
-    	file.clear();
-    	return 0;
-	} return 1;
-}
-
 // funzione di lettura
 void read(fstream& file){
 	short n;
@@ -71,16 +63,17 @@ void read(fstream& file){
 
 // funzione di scrittura
 void write(fstream& file){
-	string s;
-	short a = 0;
+	string s = "";
+	bool init = true;
 	cout << "Scrivi quello che vuoi, inserisci END quando hai finito" << endl;
 	while(getline(cin,s)){
 		if(s == "END")
 			break;
-		file << s;
-		if(isEmpty(file)){
-			file << endl;	
+		if(init){
+			file << s;
+			init = false;
 		}
+		else file << s << endl;
 		if(file.fail()){
 			cerr << "Errore durante la scrittura su file" << endl;
 			break;
@@ -120,7 +113,7 @@ bool fileSelect(fstream& file){ // occhio alla &
 	}
 	else{
 		write(file);
-		file.close();	
+		file.close();
 	}
 	return end();
 }
