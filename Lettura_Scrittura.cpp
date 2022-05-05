@@ -23,6 +23,28 @@ bool end(){
 	else return false;
 }
 
+void fileTransfer(fstream& fileA){
+	fstream fileB;
+	string s;
+	cout << "Inserisci nome programma di destinazione: ";
+	cin >> s;
+	fileB.open(s, fstream::out | fstream::trunc);
+	if(!fileB){
+		cerr << "Errore nella creazione del file" << endl;
+		return;
+	}
+	while(fileA.good()){
+		getline(fileA,s);
+		fileB << s << endl;
+		if(fileB.fail()){
+			cerr << "Errore durante la scrittura su file" << endl;
+			break;
+		}
+	}
+	fileB.close();
+	cout << "Operazione completata" << endl;
+}
+
 // funzione di lettura
 void read(fstream& file){
 	short n;
@@ -83,19 +105,30 @@ void write(fstream& file){
 }
 
 // funzione per scegliere che fare col file
-bool func(fstream& file){
-	char s;
-	cout << "Vuoi leggere (1) o scrivere (2) sul file? \t";
+void func(fstream& file){
+	int s;
+	cout << "Cosa vuoi fare?" << endl;
+	cout << "(1) Leggere da file" << endl;
+	cout << "(2) Scrivere su file" << endl;
+	cout << "(3) Sovrascrive il contenuto del file su un altro file" << endl;
+	cout << "--> ";
 	cin >> s;
-	while (cin.fail() || (s!='1' && s!='2')){
-		cerr << "Devi scrivere 1 per leggere da file o 2 per scriverci sopra" << endl;
+	while (cin.fail() || (s!=1 && s!=2 && s!=3)){
+		cerr << "Devi scrivere 1, 2 o 3 per selezionare la funzione" << endl;
 		cin.clear();
 		cin.ignore(numeric_limits<streamsize>::max(), '\n');
-		cout << "Vuoi leggere (1) o scrivere (2) sul file? \t";
+		cout << "Cosa vuoi fare?" << endl;
+		cout << "(1) Leggere da file" << endl;
+		cout << "(2) Scrivere su file" << endl;
+		cout << "(3) Sovrascrive il contenuto del file su un altro file" << endl;
+		cout << "--> ";
 		cin >> s;
 	}
-	if(s == '1') return true;
-	else return false;
+	switch(s){
+		case 1: read(file); break;
+		case 2: write(file); break;
+		case 3: fileTransfer(file);
+	}
 }
 
 // funzione che crea o seleziona il file nella cartella del .cpp
@@ -105,17 +138,11 @@ bool fileSelect(fstream& file){ // occhio alla &
 	cin >> name;
 	file.open(name, fstream::out | fstream::app | fstream::in); // se il file non esiste lo crea
 	if(!file){ // se non riesce a crearlo allora...
-		cerr << "Errore nella creazione del file";
+		cerr << "Errore nella creazione del file" << endl;
 		return 0;
 	}
-	if(func(file)){
-		read(file);
-		file.close();
-	}
-	else{
-		write(file);
-		file.close();
-	}
+	func(file);
+	file.close();
 	return end();
 }
 
