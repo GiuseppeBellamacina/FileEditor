@@ -35,6 +35,7 @@ void read(fstream& file){
 		cout << "Quante righe vuoi leggere?\t";
 		cin >> n;
 	}
+	cout << "CONTENUTO FILE:" << endl << endl;
 	string s;
 	if(n==0){ // così trascrive tutto ciò che c'è sul file
 		while(file.good()){
