@@ -20,7 +20,7 @@ bool end(){
 		cin.clear();
 		cin.ignore(numeric_limits<streamsize>::max(), '\n');
 		cout << "Vuoi fare altro?" << endl;
-		cout << "(Y) Sì" << endl;
+		cout << "(Y) Si" << endl;
 		cout << "(N) No" << endl;
 		cout << "--> ";
 		cin >> ans;
