@@ -2,6 +2,7 @@
 #include <fstream>
 #include <limits>
 #define YES 'Y'
+#define SI 'S'
 using namespace std;
 
 // funzione per far finire il programma
@@ -26,13 +27,14 @@ bool end(){
 		cin >> ans;
 	}
 	system("cls");
-	if(toupper(ans) == YES)
+	if(toupper(ans) == YES || toupper(ans) == SI)
 		return true; // così il programma riparte
 	else return false; // così il programma si ferma
 }
 
 // funzione per sovrascrivere un secondo file
 void fileTransfer(fstream& fileA){
+	system("cls");
 	fstream fileB;
 	string s;
 	cout << "Inserisci nome programma di destinazione: " << endl;
@@ -52,13 +54,14 @@ void fileTransfer(fstream& fileA){
 		}
 	}
 	fileB.close();
-	cout << "Operazione completata" << endl;
+	cout << endl << "--- Operazione completata ---" << endl;
 }
 
 // funzione di lettura
 void read(fstream& file){
+	system("cls");
 	short n;
-	cout << endl << "Quante righe vuoi leggere? (scrivi 0 per stampare tutto il file)" << endl;
+	cout << "Quante righe vuoi leggere? (scrivi 0 per stampare tutto il file)" << endl;
 	cout << "--> ";
 	cin >> n;
 	while (cin.fail() || n<0){
@@ -99,9 +102,10 @@ void read(fstream& file){
 
 // funzione di scrittura
 void write(fstream& file){
+	system("cls");
 	string s = "";
 	bool init = true;
-	cout << endl << "Scrivi quello che vuoi, inserisci END quando hai finito" << endl;
+	cout << "Scrivi quello che vuoi, inserisci END quando hai finito" << endl;
 	while(getline(cin,s)){
 		if(s == "END")
 			break;
