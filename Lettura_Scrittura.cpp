@@ -50,7 +50,7 @@ void fileTransfer(fstream& fileA){
 		fileB << s << endl;
 		if(fileB.fail()){
 			cerr << "Errore durante la scrittura su file" << endl;
-			break;
+			return;
 		}
 	}
 	fileB.close();
